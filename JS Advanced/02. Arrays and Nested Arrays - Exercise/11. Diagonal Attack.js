@@ -1,34 +1,22 @@
 function solve(arrOfArrs) {
-    const matrix = [];
-    for (let row of arrOfArrs) {
-        matrix.push(row.split(' ').map(Number));
-    }
-    let blankMatrix = [];
-    for (let row = 0; row < matrix.length; row++) {
-        blankMatrix[row] = [];
-        for (let col = 0; col < matrix.length; col++) {
-            blankMatrix[row].push(0);
-        }
-    }
+    const matrix = arrOfArrs.map(row => row.split(' ').map(Number));
     let sumFirst = 0;
     for (let i = 0; i < matrix.length; i++) {
         sumFirst += matrix[i][i];
-        blankMatrix[i][i] = matrix[i][i];
     }
     let sumSecond = 0;
     for (let i = matrix.length - 1; i >= 0; i--) {
         sumSecond += matrix[i][matrix.length - 1 - i];
-        blankMatrix[i][matrix.length - 1 - i] = matrix[i][matrix.length - 1 - i];
     }
     if (sumFirst == sumSecond) {
-        for (let row = 0; row < blankMatrix.length; row++) {
-            for (let col = 0; col < blankMatrix.length; col++) {
-                if (blankMatrix[row][col] == 0) {
-                    blankMatrix[row][col] = sumFirst;
+        for (let row = 0; row < matrix.length; row++) {
+            for (let col = 0; col < matrix.length; col++) {
+                if (row != col && row != matrix.length - 1 - col) {
+                    matrix[row][col] = sumFirst;
                 }
             }
         }
-        for (const row of blankMatrix) {
+        for (const row of matrix) {
             console.log(row.join(' '));
         }
     } else {

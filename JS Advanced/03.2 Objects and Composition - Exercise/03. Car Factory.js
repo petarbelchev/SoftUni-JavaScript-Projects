@@ -1,35 +1,28 @@
 function carFactory(requirements) {
+    let engines = [
+        { power: 90, volume: 1800 },
+        { power: 120, volume: 2400 },
+        { power: 200, volume: 3500 }
+    ];
+
+    let carriages = [
+        { type: 'hatchback', color: requirements.color },
+        { type: 'coupe', color: requirements.color }
+    ];
+
+    function wheels(wheelsize) {
+        if (wheelsize % 2 == 0) wheelsize--;
+        return [wheelsize, wheelsize, wheelsize, wheelsize];
+    }
+
     let car = {
         model: requirements.model,
-        engine: getEngine(requirements.power),
-        carriage: getCarriage(requirements.carriage, requirements.color),
-        wheels: getWheels(requirements.wheelsize)
+        engine: engines.find(e => e.power >= requirements.power),
+        carriage: carriages.find(c => c.type == requirements.carriage),
+        wheels: wheels(requirements.wheelsize)
     };
-
+    
     return car;
-
-    function getEngine(minPower) {
-        const smallEngine = { power: 90, volume: 1800 };
-        const normalEngine = { power: 120, volume: 2400 };
-        const monsterEngine = { power: 200, volume: 3500 };
-
-        if (minPower < smallEngine.power) return smallEngine;
-        else if (minPower < normalEngine.power) return normalEngine;
-        else return monsterEngine;
-    }
-
-    function getCarriage(type, color) {
-        const hatchback = { type: 'hatchback', color: color };
-        const coupe = { type: 'coupe', color: color };
-
-        if (type == 'hatchback') return hatchback;
-        else if (type == 'coupe') return coupe;
-    }
-
-    function getWheels(size) {
-        if (size % 2 == 0) size--;
-        return [size, size, size, size];
-    }
 }
 
 console.log(carFactory(

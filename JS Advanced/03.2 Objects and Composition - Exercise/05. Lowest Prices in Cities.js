@@ -1,30 +1,18 @@
 function lowestPrices(arr) {
-    let arrOfObjects = [];
+    let products = {};
+
     for (const obj of arr) {
         let [town, product, price] = obj.split(' | ');
-        arrOfObjects.push({
-            town: town,
-            product: product,
-            price: Number(price)
-        });
-    }
-    let filteredObjs = [];
-    while (arrOfObjects.length > 0) {
-        let currObj = arrOfObjects.shift();
-        for (let i = 0; i < arrOfObjects.length; i++) {
-            let objToCompare = arrOfObjects[i];
-            if (currObj.product == objToCompare.product) {
-                if (currObj.price > objToCompare.price) {
-                    currObj = objToCompare;
-                }
-                arrOfObjects.splice(i, 1);
-                i--;
-            }
+        price = Number(price);
+        if (!products.hasOwnProperty(product)) {
+            products[product] = { town, price };
+        } else if (products[product].price > price) {
+            products[product] = { town, price };
         }
-        filteredObjs.push(currObj);
     }
-    for (const key in filteredObjs) {
-        console.log(`${filteredObjs[key].product} -> ${filteredObjs[key].price} (${filteredObjs[key].town})`)
+
+    for (const key in products) {
+        console.log(`${key} -> ${products[key].price} (${products[key].town})`)
     }
 }
 
@@ -42,15 +30,15 @@ lowestPrices(
 
 lowestPrices(
     [
-    'Sofia City | Audi | 100000',
-    'Sofia City | BMW | 100000',
-    'Sofia City | Mitsubishi | 10000',
-    'Sofia City | Mercedes | 10000',
-    'Sofia City | NoOffenseToCarLovers | 0',
-    'Mexico City | Audi | 1000',
-    'Mexico City | BMW | 99999',
-    'Mexico City | Mitsubishi | 10000',
-    'New York City | Mitsubishi | 1000',
-    'Washington City | Mercedes | 1000',
+        'Sofia City | Audi | 100000',
+        'Sofia City | BMW | 100000',
+        'Sofia City | Mitsubishi | 10000',
+        'Sofia City | Mercedes | 10000',
+        'Sofia City | NoOffenseToCarLovers | 0',
+        'Mexico City | Audi | 1000',
+        'Mexico City | BMW | 99999',
+        'Mexico City | Mitsubishi | 10000',
+        'New York City | Mitsubishi | 1000',
+        'Washington City | Mercedes | 1000',
     ]
 )

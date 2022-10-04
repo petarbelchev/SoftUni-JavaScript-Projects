@@ -1,0 +1,3 @@
+# JS Applications
+
+In the course "JS Applications" we learn what HTTP requests are and how to use them. We learn about REST Services, what a Baas (backend as a service) is and how to work with it, what asynchronous code means (Promises, using async/await), what Templating and Routing are. During the course, we create a Single Page Application, using the techniques learned from previous lectures, on which we be assessed. We understand what is the architecture of an application and how to properly structure our applications. In the end of the course, we explore different design patterns and their practical guidelines, create own web components using the Web Components standard, and build a Webback environment from scratch.

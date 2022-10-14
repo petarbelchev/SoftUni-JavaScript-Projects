@@ -16,10 +16,11 @@ formContentPage.addEventListener('submit', (event) => {
     let comment = formData.get('postText');
     let username = formData.get('username');
 
-    addComment(comment, username, currTopicId, date);
-    formContentPage.reset();
-
-    loadUserComments(currTopicId);
+    if (comment !== '' && username !== '') {
+        addComment(comment, username, currTopicId, date);
+        formContentPage.reset();
+        loadUserComments(currTopicId);
+    }
 });
 
 

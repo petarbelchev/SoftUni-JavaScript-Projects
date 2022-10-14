@@ -11,10 +11,12 @@ formHomePage.addEventListener('submit', (event) => {
     let ownerName = formData.get('username');
     let topicComment = formData.get('postText');
 
-    if (topicName !== '' && ownerName !== '' && topicComment !== '') {
-        if (event.submitter.textContent == 'Post') {
+    if (event.submitter.textContent == 'Post') {
+        if (topicName !== '' && ownerName !== '' && topicComment !== '') {
             postNewTopic(topicName, ownerName, topicComment);
+            formHomePage.reset();
         }
+    } else {
         formHomePage.reset();
     }
 });

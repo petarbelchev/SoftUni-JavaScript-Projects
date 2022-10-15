@@ -1,11 +1,3 @@
-const url = 'http://localhost:3030/jsonstore/collections/myboard/comments';
-const homePageHTML = document.getElementById('homePage');
-const contentPageHTML = document.getElementById('contentPage');
-const topicTitleField = contentPage.querySelector('h2');
-const ownerNameField = contentPage.querySelector('span');
-const dateField = contentPage.querySelector('time');
-const topicCommentField = contentPage.querySelector('.post-content');
-const usersComments = contentPage.querySelector('#user-comment');
 const formContentPage = contentPage.querySelector('form');
 let currTopicId;
 
@@ -23,6 +15,12 @@ formContentPage.addEventListener('submit', (event) => {
     }
 });
 
+const homePageHTML = document.getElementById('homePage');
+const contentPageHTML = document.getElementById('contentPage');
+const topicTitleField = contentPage.querySelector('h2');
+const ownerNameField = contentPage.querySelector('span');
+const dateField = contentPage.querySelector('time');
+const topicCommentField = contentPage.querySelector('.post-content');
 
 export function loadContentPage(topicName, ownerName, date, topicComment, topicId) {
     contentPageHTML.style.display = 'flex';
@@ -37,6 +35,8 @@ export function loadContentPage(topicName, ownerName, date, topicComment, topicI
     loadUserComments(topicId);
 }
 
+const url = 'http://localhost:3030/jsonstore/collections/myboard/comments';
+const usersComments = contentPage.querySelector('#user-comment');
 
 function loadUserComments(topicId) {
     fetch(url)

@@ -1,27 +1,3 @@
-import { postNewTopic, loadHomePage } from './homePage.js';
-
-const homePageHTML = document.getElementById('homePage');
-
-const formHomePage = homePageHTML.querySelector('form');
-formHomePage.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-
-    let topicName = formData.get('topicName');
-    let ownerName = formData.get('username');
-    let topicComment = formData.get('postText');
-
-    if (event.submitter.textContent == 'Post') {
-        if (topicName !== '' && ownerName !== '' && topicComment !== '') {
-            postNewTopic(topicName, ownerName, topicComment);
-            formHomePage.reset();
-        }
-    } else {
-        formHomePage.reset();
-    }
-});
-
-const homeBtn = document.querySelector('a');
-homeBtn.addEventListener('click', loadHomePage);
+import { loadHomePage } from './homePage.js';
 
 loadHomePage();

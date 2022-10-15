@@ -1,10 +1,31 @@
 import { loadContentPage } from './contantPage.js';
 
-const homePageHTML = document.getElementById('homePage');
-const contentPageHTML = document.getElementById('contentPage');
+document.querySelector('a').addEventListener('click', loadHomePage);
 
-const topicContainer = document.querySelector('.topic-container');
+const homePageHTML = document.getElementById('homePage');
+const formHomePage = homePageHTML.querySelector('form');
+
+formHomePage.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+
+    let topicName = formData.get('topicName');
+    let ownerName = formData.get('username');
+    let topicComment = formData.get('postText');
+
+    if (event.submitter.textContent == 'Post') {
+        if (topicName !== '' && ownerName !== '' && topicComment !== '') {
+            postNewTopic(topicName, ownerName, topicComment);
+            formHomePage.reset();
+        }
+    } else {
+        formHomePage.reset();
+    }
+});
+
 const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
+const contentPageHTML = document.getElementById('contentPage');
+const topicContainer = document.querySelector('.topic-container');
 
 export function loadHomePage() {
     homePageHTML.style.display = 'flex';
@@ -24,7 +45,7 @@ export function loadHomePage() {
         }).catch(err => alert(err.message));
 }
 
-export function postNewTopic(topicName, ownerName, topicComment) {
+function postNewTopic(topicName, ownerName, topicComment) {
     let date = new Date();
 
     fetch(url, {

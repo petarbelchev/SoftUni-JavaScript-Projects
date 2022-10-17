@@ -1,13 +1,10 @@
 window.addEventListener('load', solve);
 
 function solve() {
-    const collectionOfSongs = document.querySelector('.all-hits-container');
-    collectionOfSongs.addEventListener('click', clickHandler);
-    const addBtn = document.getElementById('add-btn');
-    const totalLikesParagraph = document.querySelector('.likes > p')
-    const savedSongsCollection = document.querySelector('.saved-container');
+    const songsCollection = document.querySelector('.all-hits-container');
+    songsCollection.addEventListener('click', clickHandler);
 
-    addBtn.addEventListener('click', (ev) => {
+    document.getElementById('add-btn').addEventListener('click', (ev) => {
         ev.preventDefault();
         let genre = document.getElementById('genre');
         let songName = document.getElementById('name');
@@ -30,28 +27,26 @@ function solve() {
             elemGenerator('button', 'Like song', div, 'like-btn');
             elemGenerator('button', 'Delete', div, 'delete-btn');
 
-            collectionOfSongs.appendChild(div);
+            songsCollection.appendChild(div);
             genre.value = '';
             songName.value = '';
             authorName.value = '';
             dateCreated.value = '';
         }
-    })
-
+    });
+    
     function elemGenerator(type, content, parent, className, src) {
         let elem = document.createElement(type);
-
+        
         if (content) elem.textContent = content;
         if (src) elem.src = src;
         if (parent) parent.appendChild(elem);
         if (className) elem.className = className;
     }
-
-    savedSongsCollection.addEventListener('click', (ev) => {
-        if (ev.target.className == 'delete-btn') {
-            ev.target.parentElement.remove();
-        }
-    })
+    
+    const savedSongsCollection = document.querySelector('.saved-container');
+    savedSongsCollection.addEventListener('click', clickHandler);    
+    const totalLikesParagraph = document.querySelector('.likes > p');
 
     function clickHandler(ev) {
         if (ev.target.className == 'like-btn') {

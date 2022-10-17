@@ -3,9 +3,7 @@ window.addEventListener('load', solve);
 function solve() {
     const collectionOfSongs = document.querySelector('.all-hits-container');
     collectionOfSongs.addEventListener('click', clickHandler);
-    const form = document.querySelector('form');
-    const totalLikesParagraph = document.querySelector('.likes > p')
-    const savedSongsCollection = document.querySelector('.saved-container');
+    const form = document.querySelector('form');    
 
     form.addEventListener('submit', (ev) => {
         ev.preventDefault();
@@ -30,7 +28,7 @@ function solve() {
             collectionOfSongs.appendChild(div);
             form.reset();
         }
-    })
+    });
 
     function elemGenerator(type, content, parent, className, src) {
         let elem = document.createElement(type);
@@ -41,13 +39,10 @@ function solve() {
         if (className) elem.className = className;
     }
 
-    
-    savedSongsCollection.addEventListener('click', (ev) => {
-        if (ev.target.className == 'delete-btn') {
-            ev.target.parentElement.remove();
-        }
-    })
-    
+    const savedSongsCollection = document.querySelector('.saved-container');    
+    savedSongsCollection.addEventListener('click', clickHandler);    
+    const totalLikesParagraph = document.querySelector('.likes > p');
+
     function clickHandler(ev) {
         if (ev.target.className == 'like-btn') {
             let currLikes = Number(totalLikesParagraph.textContent.split(': ')[1]);

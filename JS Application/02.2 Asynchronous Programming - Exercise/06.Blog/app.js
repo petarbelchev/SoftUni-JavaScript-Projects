@@ -1,33 +1,42 @@
-function attachEvents() {
-    document.getElementById('btnLoadPosts').addEventListener('click', loadPosts);
-    document.getElementById('btnViewPost').addEventListener('click', loadPostDetails);
-}
+const host = 'http://localhost:3030/jsonstore'
+const uriPosts = '/blog/posts'
+const uriComments = '/blog/comments'
+
+const btnLoadPosts = document.getElementById('btnLoadPosts')
+const btnViewPost = document.getElementById('btnViewPost')
+const postsList = document.getElementById('posts')
+const postTitleField = document.getElementById('post-title')
+const pContent = document.getElementById('post-body')
+const ulComments = document.getElementById('post-comments')
+
+btnLoadPosts.addEventListener('click', loadPosts)
+btnViewPost.addEventListener('click', loadPostDetails)
 
 let arrOfPosts = [];
-let postsList = document.getElementById('posts');
-let postTitleField = document.getElementById('post-title');
-let pContent = document.getElementById('post-body');
-let ulComments = document.getElementById('post-comments');
 
-function loadPosts() {
-    postsList.innerHTML = '';
-    
-    fetch('http://localhost:3030/jsonstore/blog/posts')
-        .then(response => {
-            if (response.status !== 200) {
-                throw new Error(`${response.status} ${response.statusText}`);
-            }
+async function loadPosts() {
+    const response = await fetch(host + uriPosts)
+    const postsData = Object.values(await response.json())
+    postsData.forEach(postData => {
+        arrOfPosts.push(postData)
+        postsList.appendChild(makeElement('option', postData.id, postData.title))
+    })
+}
 
-            pContent.textContent = '';
-            return response.json();
+async function loadPostDetails() {
+    const currPost = arrOfPosts.find(p => p.id == postsList.value)
+
+    postTitleField.textContent = currPost.title
+    pContent.textContent = currPost.body
+
+    const response = await fetch(host + uriComments)
+    const commentsData = Object.values(await response.json())
+    ulComments.innerHTML = ''
+    commentsData
+        .filter(c => c.postId == currPost.id)
+        .forEach(c => {
+            ulComments.appendChild(makeElement('li', undefined, c.text, c.id))
         })
-        .then(data => {
-            for (const key in data) {
-                arrOfPosts.push(data[key]);
-                postsList.appendChild(makeElement('option', key, data[key].title));
-            }
-        })
-        .catch(error => pContent.textContent = error.message);
 }
 
 function makeElement(type, value, textContent, id) {
@@ -37,43 +46,3 @@ function makeElement(type, value, textContent, id) {
     if (id !== undefined) element.id = id;
     return element;
 }
-
-
-function loadPostDetails() {
-    let postId = postsList.value;
-    postTitleField.textContent = '';
-    pContent.textContent = '';
-    ulComments.innerHTML = '';
-
-    fetch('http://localhost:3030/jsonstore/blog/comments')
-        .then(response => {
-            if (response.status !== 200) {
-                throw new Error(`${response.status} ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            let arrOfComments = Object.values(data);
-
-            if (postId === '') {
-                return arrOfComments;
-            }
-
-            return arrOfComments.filter(c => c.postId == postId);
-        })
-        .then(comments => {
-            let currPost = arrOfPosts.find(post => post.id == postId);
-
-            if (currPost !== undefined){
-                postTitleField.textContent = currPost.title;
-                pContent.textContent = currPost.body;
-            }
-
-            comments.forEach(c => {
-                ulComments.appendChild(makeElement('li', undefined, c.text, c.id))
-            });
-        })
-        .catch(error => pContent.textContent = error.message);
-}
-
-attachEvents();

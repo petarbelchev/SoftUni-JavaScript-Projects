@@ -5,11 +5,11 @@ function getInfo() {
 
     let stopNameField = document.getElementById('stopName');
     let busesList = document.getElementById('buses');
-    busesList.innerHTML = '';
+    busesList.replaceChildren();
 
     fetch(`http://localhost:3030/jsonstore/bus/businfo/${stopId}`)
         .then(response => {
-            if (stopId === '' || response.status != 200){
+            if (stopId === '' || response.status != 200) {
                 throw new Error();
             }
             return response.json();

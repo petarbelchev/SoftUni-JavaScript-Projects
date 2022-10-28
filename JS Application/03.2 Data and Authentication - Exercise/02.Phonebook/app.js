@@ -3,12 +3,15 @@ function attachEvents() {
     let loadBtn = document.getElementById('btnLoad');
     loadBtn.addEventListener('click', loadEntries);
     document.getElementById('btnCreate').addEventListener('click', createEntry);
+    let ul = document.getElementById('phonebook');
 
     function loadEntries() {
         fetch(url)
-            .then(res => res.json())
-            .then(data => {
-                let ul = document.getElementById('phonebook');
+            .then(res => {
+                if (res.status == 200) {
+                    return res.json()
+                }
+            }).then(data => {
                 ul.innerHTML = '';
 
                 Object.values(data).forEach(entry => {
@@ -36,12 +39,13 @@ function attachEvents() {
                 person: personField.value,
                 phone: phoneField.value
             })
-        });
-
-        personField.value = '';
-        phoneField.value = '';
-
-        loadBtn.click();
+        }).then(res => {
+                if (res.status == 200) {
+                    personField.value = '';
+                    phoneField.value = '';
+                    loadBtn.click();
+                }
+            });
     }
 
     function deleteEntry(e) {

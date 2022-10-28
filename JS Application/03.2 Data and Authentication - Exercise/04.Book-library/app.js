@@ -1,7 +1,6 @@
 let url = 'http://localhost:3030/jsonstore/collections/books'
 
-const loadAllBooksBtn = document.getElementById('loadBooks')
-loadAllBooksBtn.addEventListener('click', loadAllBooks)
+document.getElementById('loadBooks').addEventListener('click', loadAllBooks)
 
 const submitBookBtn = document.querySelector('form button')
 submitBookBtn.addEventListener('click', (e) => {

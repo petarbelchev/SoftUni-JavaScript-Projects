@@ -1,5 +1,6 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import { becomeMember, createTeam } from "../api/teams.js";
+import { createTeam } from "../api/teams.js";
+import { becomeMember } from "../api/members.js";
 import { inputValidator } from "../util.js";
 
 

@@ -1,5 +1,6 @@
 import { html, nothing, render } from "../../node_modules/lit-html/lit-html.js";
-import { getMembershipsByTeamId, getTeamById } from "../api/teams.js";
+import { getTeamById } from "../api/teams.js";
+import { getMembershipsByTeamId } from "../api/members.js";
 
 
 const detailsPageTemp = (team, members, pending, currUserStatus, currUser) => html`
@@ -25,8 +26,8 @@ const detailsPageTemp = (team, members, pending, currUserStatus, currUser) => ht
             <div class="pad-large">
                 <h3>Members</h3>
                 <ul class="tm-members">
-                    ${currUserStatus.isOwner && members.length > 1 ?
-                        html`
+                    ${currUserStatus.isOwner && members.length > 1 
+                        ?   html`
                             <li>${currUser.username}</li>
                             ${members.filter(m => m._ownerId != currUser._id).map(m => html`
                                 <li>${m.user.username}<a href="/remove/${team._id}/${m._id}" class="tm-control action">Remove from team</a></li>
@@ -41,8 +42,8 @@ const detailsPageTemp = (team, members, pending, currUserStatus, currUser) => ht
                 </ul>
             </div>
             <div class="pad-large">
-                ${pending.length > 0 && currUserStatus.isOwner ?
-                    html`
+                ${pending.length > 0 && currUserStatus.isOwner 
+                    ?   html`
                         <h3>Membership Requests</h3>
                         <ul class="tm-members">
                             ${pending.map(p => html`
@@ -53,7 +54,7 @@ const detailsPageTemp = (team, members, pending, currUserStatus, currUser) => ht
                             `)}
                         </ul>
                     `
-                    : nothing
+                    :   nothing
                 }
             </div>
         </article>

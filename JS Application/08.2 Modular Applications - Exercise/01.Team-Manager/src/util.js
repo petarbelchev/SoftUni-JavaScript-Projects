@@ -1,8 +1,16 @@
-import { approveRequest, becomeMember, removeRequest } from "./api/teams.js";
+import { approveRequest, becomeMember, removeRequest } from "./api/members.js";
 import { logout } from "./api/users.js";
 
 
 const [browse, login, register, myTeams, logoutBtn] = document.querySelector('nav').children;
+const mainElem = document.querySelector('main');
+
+export function ctxHandler(ctx, next) {
+    ctx.userData = JSON.parse(localStorage.getItem('userData'));
+    ctx.mainElem = mainElem;
+    updateNav(ctx.userData);
+    next();
+}
 
 export function updateNav(userData) {
     if (userData) {
@@ -44,7 +52,7 @@ export function inputValidator(data, messageField) {
         messageField.textContent = 'Team name should be at least 4 characters!';
         return false;
     }
-    if (data.imageUrl == '') {
+    if (data.logoUrl == '') {
         messageField.textContent = 'Image URL is required!'
         return false;
     }

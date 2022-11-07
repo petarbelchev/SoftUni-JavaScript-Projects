@@ -25,7 +25,7 @@ async function request(url, options) {
     }
 }
 
-function createOptions(method = 'get', ctx, data) {
+function createOptions(method, ctx, data) {
     let options = {
         method,
         headers: {}

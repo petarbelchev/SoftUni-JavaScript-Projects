@@ -1,5 +1,6 @@
 import { html, nothing, render } from "../../node_modules/lit-html/lit-html.js";
-import { getAllMembers, getAllTeams } from "../api/teams.js";
+import { getAllTeams } from "../api/teams.js";
+import { getAllMembers } from "../api/members.js";
 
 
 const browsePageTemp = (teams, user) => html`

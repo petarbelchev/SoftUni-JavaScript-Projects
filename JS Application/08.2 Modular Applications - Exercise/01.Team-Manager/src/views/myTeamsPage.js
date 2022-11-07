@@ -1,5 +1,6 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import { getMyTeams, getMyTeamsMembers } from "../api/teams.js";
+import { getMyTeams } from "../api/teams.js";
+import { getMyTeamsMembers } from "../api/members.js";
 
 
 const myTeamsPageTemp = (myTeams, myTeamsMembers) => html`
@@ -41,7 +42,8 @@ export async function myTeamsPage(ctx) {
     let myTeamsMembers;
 
     if (myTeams.length > 0) {
-        myTeamsMembers = await getMyTeamsMembers(myTeams.map(t => t.teamId), ctx);
+        let myTeamsIds = myTeams.map(t => t.teamId);
+        myTeamsMembers = await getMyTeamsMembers(myTeamsIds, ctx);
     }
     render(myTeamsPageTemp(myTeams, myTeamsMembers), ctx.mainElem);
 }

@@ -8,7 +8,7 @@ const registerPageTemp = (ctx) => html`
             <header class="pad-med">
                 <h1>Register</h1>
             </header>
-            <form id="register-form" class="main-form pad-large" @submit=${(e) => onRegister(e, ctx)}>
+            <form id="register-form" class="main-form pad-large" @submit=${(e)=> onRegister(e, ctx)}>
                 <div class="error"></div>
                 <label>E-mail: <input type="text" name="email"></label>
                 <label>Username: <input type="text" name="username"></label>
@@ -41,11 +41,11 @@ async function onRegister(e, ctx) {
         messageField.textContent = 'Invalid email address!';
         return;
     }
-    if(data.username.length < 3) {
+    if (data.username.length < 3) {
         messageField.textContent = 'Username should be at least 3 characters!';
         return;
     }
-    if(data.password.length < 3) {
+    if (data.password.length < 3) {
         messageField.textContent = 'Password should be at least 3 characters!';
         return;
     }
@@ -54,10 +54,6 @@ async function onRegister(e, ctx) {
         return;
     }
 
-    try {
-        localStorage.setItem('userData', JSON.stringify(await register(data)));
-        ctx.page.redirect('/myteams');
-    } catch (error) {
-        messageField.textContent = error.message;
-    }
+    localStorage.setItem('userData', JSON.stringify(await register(data)));
+    ctx.page.redirect('/myteams');
 }
